@@ -253,6 +253,12 @@ func (ipt *IPTables) AppendUnique(table, chain string, rulespec ...string) error
 	return nil
 }
 
+// DeleteById removes by its number in specified table/chain
+func (ipt *IPTables) DeleteById(table, chain string, id uint) error {
+	cmd := []string{"-t", table, "-D", chain, strconv.Itoa(int(id))}
+	return ipt.run(cmd...)
+}
+
 // Delete removes rulespec in specified table/chain
 func (ipt *IPTables) Delete(table, chain string, rulespec ...string) error {
 	cmd := append([]string{"-t", table, "-D", chain}, rulespec...)
